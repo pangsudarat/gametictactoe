@@ -22,12 +22,12 @@ const Cell = styled.div`
 `;
 
 const BoardContainer = styled.div`
-display:"grid";
-grid-template-columns:1fr 1fr 1fr;
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
 width: 240px;
-grid-row-gap:16px;
-grid-column-gap:16px;
-margin: "auto";
+grid-row-gap: 16px;
+grid-column-gap: 16px;
+margin: auto;
 `;
 
 const GameButton = styled.button`
@@ -37,7 +37,7 @@ const GameButton = styled.button`
   margin-top: 16px;
 `;
 
-const winnStates = [
+const winStates = [
   [0, 1, 2],
   [3, 4, 5],
   [6, 7, 8],
@@ -51,11 +51,13 @@ const winnStates = [
 ];
 
 const calculateWinner = (gameState) =>{
-  let winner = "x";
+  let winner ;
   for( let i = 0; i < winStates.length;i++){
     const winState = winStates[i];
-    if(gameState [winnState[0]] == gameState [winState[1]] && 
-      gameState [winnState[1]] == gameState [winState[2]] && 
+
+    if(
+      gameState [winState[0]] == gameState [winState[1]] && 
+      gameState [winState[1]] == gameState [winState[2]] && 
       Boolean(gameState[winState[0]])
       ){
         winner = gameState[winState[0]];
@@ -80,7 +82,8 @@ function App() {
 
   const [player, setPlayer] = useState("x");
   const winner = calculateWinner(gameState);
-  const isTie = !winner && gameState.filter(state => Boolean(state).length === 9)
+  const isTie =
+   !winner && gameState.filter((state) => Boolean(state)).length === 9;
   const onCellClick = (index) => {
     if (gameState[index] != "" || Boolean(winner) || isTie){
       return;
@@ -102,7 +105,7 @@ function App() {
 
   return( <div 
     className='App'
-    style={{ backgroundColor: "gray", height: "1000vj", padding:16}}
+    style={{ backgroundColor: "gray", height: "1000vh", padding: 16 }}
     >
     <h1>Tic Tac Toe</h1>
     { winner ? (
@@ -114,7 +117,7 @@ function App() {
     )}
    
     <BoardContainer>
-      {[gameState].map((cellNumber, index ) => {
+      {gameState.map((cellNumber, index ) => {
         return <Cell onClick={() => onCellClick(index)}>{cellNumber}</Cell>;
       })}
     </BoardContainer>
